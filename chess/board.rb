@@ -1,9 +1,9 @@
 require_relative 'pieces'
-
+require 'byebug'
 
 class Board
 
-  attr_accessor :rows
+  # attr_accessor :rows
 
   def initialize
     @rows = Array.new(8){Array.new(8)}
@@ -39,19 +39,23 @@ class Board
   end
 
   def [](pos)
-    x,y = pos
-    @board[y][x]
+    x, y = pos
+    @rows[y][x]
   end
 
   def []=(pos, val)
-    x,y = pos
-    @board[y][x] = val
+    debugger
+    x, y = pos
+    @rows[y][x] = val
+    # self[pos] = val THIS WILL CALL ITSELF INFINITELY
   end
 
   def move_piece(color, start_pos, end_pos)
-    raise "#{self[end_pos]} is at #{end_pos}" if !self[end_pos].is_a?(NullPiece)
+    raise "#{self[end_pos]} is at #{end_pos}" unless self[end_pos].is_a?(NullPiece)
     raise "No piece at #{start_pos}" if self[start_pos].is_a?(NullPiece)
-    raise "Not your piece" if self[start_pos]
+    raise "Not your piece" if self[start_pos].color != color
+    # debugger
+    self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
   end
 
   def valid_pos?(pos)
