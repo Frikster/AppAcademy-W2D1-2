@@ -27,6 +27,12 @@ class Display
       print("\n")
     end
     @cursor.get_input
+    # debugger
+    # if res == @cursor_pos
+    #   selected = @cursor_pos
+    #
+    #   prev_pos = @cursor_pos
+    # end
   end
 
 end

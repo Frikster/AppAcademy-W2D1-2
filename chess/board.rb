@@ -3,7 +3,7 @@ require 'byebug'
 
 class Board
 
-  # attr_accessor :rows
+  attr_accessor :rows
 
   def initialize
     @rows = Array.new(8){Array.new(8)}
@@ -17,13 +17,13 @@ class Board
     @rows[7][1] = Knight.new("white", self, [7,1])
     @rows[7][6] = Knight.new("white", self, [7,6])
     @rows[0][2] = Bishop.new("black", self, [0,2])
-    @rows[0][6] = Bishop.new("black", self, [0,6])
+    @rows[0][5] = Bishop.new("black", self, [0,5])
     @rows[7][2] = Bishop.new("white", self, [7,2])
-    @rows[7][6] = Bishop.new("white", self, [7,6])
-    @rows[0][2] = King.new("black", self, [0,2])
-    @rows[7][3] = King.new("white", self, [7,3])
-    @rows[0][3] = Queen.new("black", self, [0,3])
-    @rows[7][2] = Queen.new("white", self, [7,2])
+    @rows[7][5] = Bishop.new("white", self, [7,5])
+    @rows[0][3] = King.new("black", self, [0,3])
+    @rows[7][4] = King.new("white", self, [7,4])
+    @rows[0][4] = Queen.new("black", self, [0,4])
+    @rows[7][3] = Queen.new("white", self, [7,3])
 
     (0..7).each do |col|
       @rows[1][col] = Pawn.new("black", self, [1, col])
@@ -40,13 +40,13 @@ class Board
 
   def [](pos)
     x, y = pos
-    @rows[y][x]
+    @rows[x][y]
   end
 
   def []=(pos, val)
-    debugger
+    # debugger
     x, y = pos
-    @rows[y][x] = val
+    @rows[x][y] = val
     # self[pos] = val THIS WILL CALL ITSELF INFINITELY
   end
 
@@ -59,6 +59,7 @@ class Board
   end
 
   def valid_pos?(pos)
+    pos.all? { |el| el.between?(0, 7) }
   end
 
   def add_piece(piece, pos)
